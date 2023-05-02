@@ -1,6 +1,6 @@
 all:
 	docker build -t nginx srcs/requirements/nginx
-	docker run --name nginx nginx
+	docker run -d -p 80:80 --name nginx nginx
 
 clean:
 	docker stop nginx
