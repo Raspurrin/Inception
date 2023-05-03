@@ -1,5 +1,14 @@
 FROM alpine:3.16
-RUN apk add --no-cache mysql-client nginx
-COPY conf/nginx.conf /etc/nginx/sites-available/default
+RUN apk update
+RUN apk add bash nginx
 EXPOSE 80/tcp
+COPY tools/index.html /var/www/html/
+COPY conf/nginx.conf /etc/nginx/sites-available/default
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+
+# FROM ubuntu
+# RUN apt-get update
+# RUN apt-get install nginx -y
+# COPY tools/index.html /var/www/html/
+# EXPOSE 80
+# CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

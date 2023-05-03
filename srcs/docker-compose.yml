@@ -1,6 +1,36 @@
 version: "3.9"
+
 services:
-  web:
-    build: .
+  mariadb:
+    network:
+      - inception
+    build: srcs/requirements/mariadb
     ports:
-      - ""
+      - "3306"
+    container_name: mariadb
+    env_file: .env
+
+  nginx:
+    network:
+      - inception
+    build: srcs/requirements/nginx
+    ports:
+      - "433:433/tcp"
+      - "9000"
+    depends_on:
+      - mariadb
+    container_name: nginx
+    env_file: .env
+
+  wordpress:
+    network:
+      - inception
+    build: srcs/requirements/wordpress
+    ports:
+      - "3306"
+      - "9000"
+    depends_on:
+      - mariadb
+      - web
+    container_name: wordpress
+    env_file: .env
