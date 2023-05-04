@@ -1,11 +1,9 @@
 all:
-	docker build -t nginx srcs/requirements/nginx
-	docker run -d -p 80:80 --name nginx nginx
+	docker compose -f srcs/docker-compose.yml up -d
 
 clean:
-	docker stop nginx
-	docker rm -f nginx
-fclean: clean
-	docker rmi -f nginx
+	docker compose down
 
-re: fclean all
+re: clean all
+
+#.PHONY all clean re
