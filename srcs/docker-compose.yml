@@ -27,20 +27,21 @@ services:
         aliases:
           - mialbert.42.fr
 
+
+  wordpress:
+    build: srcs/requirements/wordpress
+    ports:
+      - "3360:3306"
+      - "9000:9000"
+    depends_on:
+      - mariadb
+      - nginx
+    container_name: wordpress
+    env_file: .env
+    networks: 
+      inception:
+        aliases:
+          - mialbert.42.fr
+
 networks:
   inception:
-  # wordpress:
-  #   network:
-  #     - inception
-  #   build: srcs/requirements/wordpress
-  #   ports:
-  #     - "3306"
-  #     - "9000"
-  #   depends_on:
-  #     - mariadb
-  #     - web
-  #   container_name: wordpress
-  #   env_file: .env
-
-    # aliases:
-    #   mialbert.42.fr
