@@ -1,14 +1,16 @@
 version: "3.9"
 
 services:
-  # mariadb:
-  #   network:
-  #     - inception
-  #   build: srcs/requirements/mariadb
-  #   ports:
-  #     - "3306"
-  #   container_name: mariadb
-  #   env_file: .env
+  mariadb:
+    build: srcs/requirements/mariadb
+    ports:
+      - "3306:3306"
+    container_name: mariadb
+    env_file: .env
+    networks:
+      inception:
+        aliases:
+          - mialbert.42.fr
 
   nginx:
     build: requirements/nginx
@@ -16,8 +18,8 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
       - "9000:9000/tcp"
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     container_name: nginx
     env_file: .env
     networks: 
@@ -25,6 +27,8 @@ services:
         aliases:
           - mialbert.42.fr
 
+networks:
+  inception:
   # wordpress:
   #   network:
   #     - inception
@@ -38,7 +42,5 @@ services:
   #   container_name: wordpress
   #   env_file: .env
 
-networks:
-  inception:
     # aliases:
     #   mialbert.42.fr
