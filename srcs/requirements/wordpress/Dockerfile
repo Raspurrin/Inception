@@ -1,6 +1,8 @@
 FROM alpine:3.14
-RUN apk update && apk add --no-cache curl
-RUN apk add php7-fpm php7-mysqli php7-json php7-session \
+
+COPY conf/php.ini /var/www/html
+COPY conf/wp-config.php /var/www/html
+RUN apk add curl php7-fpm php7-mysqli php7-json php7-session \
     php7-dom php7-curl php7-gd php7-ctype php7-opcache php7-zlib php7-xmlwriter \
     php7-fileinfo php7-iconv php7-simplexml php7-tokenizer php7-xml php7-posix \
     php7-mbstring php7-pecl-apcu php7-exif php7-imagick php7-zip \

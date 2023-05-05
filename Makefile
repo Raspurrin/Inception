@@ -1,15 +1,24 @@
-all:
+ENV_STATE := $(shell find srcs/.env -type f)
+
+ifeq ($(ENV_STATE),srcs/.env)
+ENV_FLAG	=
+else 
+ENV_FLAG	= set_env
+endif
+
+all: $(ENV_FLAG) docker
+
+docker:
 	docker compose -f srcs/docker-compose.yml up -d
 
 set_env:
 	bash set_env.bash
 
-setup: set_env all
-
 clean:
 	docker compose -f srcs/docker-compose.yml down
-
-clean_env:
+	docker-compose build nginx
+	docker-compose build wordpress
+	docker-compose build mariadb
 	rm srcs/.env
 
 re: clean all

@@ -2,7 +2,6 @@ FROM alpine:3.16
 RUN apk update
 RUN apk add bash nginx
 EXPOSE 443/tcp
-COPY tools/index.html /var/www/html
 COPY conf/nginx.conf /etc/nginx/sites-available/default
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
 
