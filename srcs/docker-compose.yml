@@ -20,7 +20,7 @@ services:
   nginx:
     container_name: nginx
     build: 
-      context: requirements/nginx
+      context: srcs/requirements/nginx
       args:
         DEBUG: "true"
     ports:
@@ -28,6 +28,7 @@ services:
       - "443:443/tcp"
     depends_on:
       - mariadb
+      - wordpress
     volumes:
       - wordpress:/var/www/html/wordpress
     env_file: .env
@@ -47,7 +48,6 @@ services:
       - "9000:9000"
     depends_on:
       - mariadb
-      - nginx
     volumes:
       - wordpress:/var/www/html/wordpress
     env_file: .env

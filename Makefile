@@ -21,7 +21,7 @@ fclean:
 	docker image rm srcs-wordpress srcs-nginx srcs-mariadb
 	docker volume rm datadir wordpress
 
-re: clean all
+re: $(ENV_FLAG) clean all
 
 env_re: clean_env setup
 
