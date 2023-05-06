@@ -1,4 +1,4 @@
-ENV_STATE := $(shell find srcs/.env -type f)
+ENV_STATE = $(shell find srcs/.env -type f)
 
 ifeq ($(ENV_STATE),srcs/.env)
 ENV_FLAG	=
@@ -16,10 +16,10 @@ set_env:
 
 clean:
 	docker compose -f srcs/docker-compose.yml down
-	docker-compose build nginx
-	docker-compose build wordpress
-	docker-compose build mariadb
-	rm srcs/.env
+
+fclean: 
+	docker image rm srcs-wordpress srcs-nginx srcs-mariadb
+	docker volume rm datadir wordpress
 
 re: clean all
 

@@ -1,11 +1,16 @@
 version: "3.9"
-
 services:
+
   mariadb:
-    build: srcs/requirements/mariadb
+    container_name: mariadb
+    build: 
+      context: srcs/requirements/mariadb
+      args:
+        DEBUG: "true"
     ports:
       - "3306:3306"
-    container_name: mariadb
+    volumes:
+      - datadir:/var/lib/mysql
     env_file: .env
     networks:
       inception:
@@ -13,29 +18,38 @@ services:
           - mialbert.42.fr
 
   nginx:
-    build: requirements/nginx
+    container_name: nginx
+    build: 
+      context: requirements/nginx
+      args:
+        DEBUG: "true"
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
     depends_on:
       - mariadb
-    container_name: nginx
+    volumes:
+      - wordpress:/var/www/html/wordpress
     env_file: .env
     networks: 
       inception:
         aliases:
           - mialbert.42.fr
 
-
   wordpress:
-    build: srcs/requirements/wordpress
+    container_name: wordpress
+    build: 
+      context: srcs/requirements/wordpress
+      args:
+        DEBUG: "true"
     ports:
       - "3360:3306"
       - "9000:9000"
     depends_on:
       - mariadb
       - nginx
-    container_name: wordpress
+    volumes:
+      - wordpress:/var/www/html/wordpress
     env_file: .env
     networks: 
       inception:
@@ -44,3 +58,7 @@ services:
 
 networks:
   inception:
+
+volumes: 
+  datadir:
+  wordpress:
