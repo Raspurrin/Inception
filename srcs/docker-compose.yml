@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - datadir:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     env_file: .env
     networks:
       inception:
@@ -25,7 +25,7 @@ services:
         DEBUG: "true"
     ports:
       - "80:80/tcp"
-      - "443:443/tcp"
+      # - "443:443/tcp"
     depends_on:
       - mariadb
       - wordpress
@@ -44,7 +44,6 @@ services:
       args:
         DEBUG: "true"
     ports:
-      - "3360:3306"
       - "9000:9000"
     depends_on:
       - mariadb
@@ -59,6 +58,18 @@ services:
 networks:
   inception:
 
-volumes: 
-  datadir:
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/mialbert/Documents/my_projects/inception/srcs/volumes/mariadb
   wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/mialbert/Documents/my_projects/inception/srcs/volumes/wordpress

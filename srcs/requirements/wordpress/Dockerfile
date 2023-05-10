@@ -13,3 +13,4 @@ COPY conf/wp-config.php /var/www/html
 RUN curl -L https://wordpress.org/latest.tar.gz | tar -xz -C /var/www/html
 EXPOSE 3306
 EXPOSE 9000
+CMD [ "/usr/sbin/php-fpm7.3", "-F" ]
