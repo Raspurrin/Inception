@@ -12,6 +12,7 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     env_file: .env
+    restart: on-failure
     networks:
       inception:
         aliases:
@@ -24,21 +25,25 @@ services:
       args:
         DEBUG: "true"
     ports:
-      - "80:80/tcp"
-      # - "443:443/tcp"
+      - "443:443/tcp"
     depends_on:
       - mariadb
       - wordpress
     volumes:
       - wordpress:/var/www/html/wordpress
     env_file: .env
+    restart: on-failure
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
     networks: 
       inception:
         aliases:
           - mialbert.42.fr
 
   wordpress:
-    #command: tail -f /dev/null #illegal haaaaacks
     container_name: wordpress
     build: 
       context: srcs/requirements/wordpress
@@ -51,6 +56,7 @@ services:
     volumes:
       - wordpress:/var/www/html/wordpress
     env_file: .env
+    restart: on-failure
     networks: 
       inception:
         aliases:
@@ -58,6 +64,7 @@ services:
 
 networks:
   inception:
+    driver: bridge
 
 volumes:
   mariadb:

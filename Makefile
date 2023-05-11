@@ -32,6 +32,8 @@ clean:
 	docker volume rm mariadb wordpress
 	rm -rf srcs/volumes
 
-re: $(ENV_FLAG) clean all
+fclean: clean create_vol
+
+re: $(ENV_FLAG) fclean all
 
 #.PHONY all clean re
