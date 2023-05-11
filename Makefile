@@ -16,7 +16,7 @@ endif
 all: $(ENV_FLAG) $(VOL_FLAG) docker
 
 docker:
-	docker compose -f srcs/docker-compose.yml up -d
+	docker compose -f srcs/docker-compose.yml up --build -d
 
 create_vol: 
 	mkdir srcs/volumes
@@ -27,14 +27,11 @@ set_env:
 	bash set_env.bash
 
 clean:
-	docker compose -f srcs/docker-compose.yml down
-
-fclean: 
+	docker compose -f srcs/docker-compose.yml down 
 	docker image rm srcs-wordpress srcs-nginx srcs-mariadb
-	docker volume rm datadir wordpress
+	docker volume rm mariadb wordpress
+	rm -rf srcs/volumes
 
 re: $(ENV_FLAG) clean all
-
-env_re: clean_env setup
 
 #.PHONY all clean re

@@ -38,6 +38,7 @@ services:
           - mialbert.42.fr
 
   wordpress:
+    #command: tail -f /dev/null #illegal haaaaacks
     container_name: wordpress
     build: 
       context: srcs/requirements/wordpress
