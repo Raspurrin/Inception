@@ -1,5 +1,7 @@
-INSERT INTO wp_users (MYSQL_USER, user_pass)
-VALUES ($MYSQL_ROOT_USER, MD5($MYSQL_PASSWORD));
+CREATE DATABASE IF NOT EXISTS my_database;
+USE my_database;
+CREATE USER 'username'@'%' IDENTIFIED BY 'user_password';
+GRANT ALL PRIVILEGES ON my_database.* TO 'username'@'%';
+CREATE USER 'rootname'@'%' IDENTIFIED BY 'root_password';
+GRANT ALL PRIVILEGES ON my_database.* TO 'rootname'@'%';
 
-INSERT INTO wp_users (MYSQL_USER, user_pass)
-VALUES ($MYSQL_USER, MD5($MYSQL_ROOT_PASSWORD));
