@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql:rw
     env_file: .env
     restart: on-failure
     networks:
@@ -25,12 +25,13 @@ services:
       args:
         DEBUG: "true"
     ports:
-      - "443:443/tcp"
+      - "80:80"
+      #- "443:443/tcp"
     depends_on:
       - mariadb
       - wordpress
     volumes:
-      - wordpress:/var/www/html/wordpress
+      - wordpress:/var/www/html/wordpress:rw
     env_file: .env
     restart: on-failure
     logging:
@@ -54,7 +55,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress:/var/www/html/wordpress
+      - wordpress:/var/www/html/wordpress:rw
     env_file: .env
     restart: on-failure
     networks: 
@@ -73,11 +74,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/mialbert/Documents/my_projects/inception/srcs/volumes/mariadb
+      device: /Users/mialbert/Documents/Inception/srcs/volumes/mariadb
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/mialbert/Documents/my_projects/inception/srcs/volumes/wordpress
+      device: /Users/mialbert/Documents/Inception/srcs/volumes/wordpress

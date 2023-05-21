@@ -8,7 +8,6 @@ COPY tools/init.sql /docker-entrypoint-initdb.d/
 COPY tools/default_to_env.sh /docker-entrypoint-initdb.d/
 RUN chmod 777 /docker-entrypoint-initdb.d/default_to_env.sh
 RUN chmod 777 /docker-entrypoint-initdb.d/init.sql
-#RUN /docker-entrypoint-initdb.d/default_to_env.sh
 RUN touch /var/run/mysqld/mysqld.sock
 RUN chown -R mysql:mysql /var/run/mysqld/mysqld.sock
 RUN mariadb-install-db --basedir=/usr --datadir=/var/lib/mysql
